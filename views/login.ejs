@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <style>
+    body {
+      font-family:Verdana, Geneva, Tahoma, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #login {
+      position: relative;
+      background: #FFFFFF;
+      padding: 30px;
+      border-radius: 5px;
+      width: 300px;
+      border: 1px solid green;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    #forgotForm {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: #FFFFFF;
+      width: 100%;
+      height: 100%;
+      padding: 30px;
+      border-radius: 5px;
+      box-sizing: border-box;
+      z-index: 1;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 8px;
+      margin: 10px 0;
+      border: 1px solid #ADB5BD;
+      border-radius: 5px;
+      background-color: #FFFFFF;
+      transition: all ease 0.3s;
+      color: #495057;
+      font-size: 0.9vw;
+    }
+    button:hover {
+      border:1px solid green;
+      background-color:green;
+      color: #FFFFFF;
+    }
+    input:hover {
+      border: 1px solid green;
+      color: #495057;
+    }
+    input:focus {
+      outline:none;
+    }
+    .links {
+      margin-top: 0.5vw;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    a {
+      font-size: 13px;
+      color: green;
+      cursor: pointer;
+      display: block;
+      text-align: right;
+    }
+    #register {
+      text-align: left;
+      font-size: 13px;
+      display: block;
+      text-decoration: none;
+    }
+    .back-link {
+      font-size: 13px;
+      color: green;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    h3 {
+      margin-bottom: 10px;
+      color: #495057;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="login">
+    <!-- Login Form -->
+    <form action="/login" method="POST">
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <div class="links">
+        <a id="register" href="/register">Sign Up</a>
+        <a id="showForgot">Forgot Password</a>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <div class="flag">
+      <% if (message) { %>
+        <div style="color: green; font-weight: bold; font-size:0.9vw; margin-bottom: 10px;">
+          <%= message %>
+        </div>
+      <% } %>
+      <% if (messageRed) { %>
+        <div style="color: red; font-weight: bold; font-size:0.9vw; margin-bottom: 10px;">
+          <%= messageRed %>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- Forgot Password Overlay -->
+    <div id="forgotForm">
+      <form action="/login/forgot" method="POST">
+        <h3>Forgot Password</h3>
+        <input type="email" name="email" placeholder="Enter your email" required>
+        <button type="submit">Send Reset Link</button>
+        <div class="back-link" id="backToLogin">← Back to Login</div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const showForgot = document.getElementById("showForgot");
+    const forgotForm = document.getElementById("forgotForm");
+    const backToLogin = document.getElementById("backToLogin");
+
+    showForgot.addEventListener("click", () => {
+      forgotForm.style.display = "block";
+    });
+
+    backToLogin.addEventListener("click", () => {
+      forgotForm.style.display = "none";
+    });
+  </script>
+</body>
+</html>

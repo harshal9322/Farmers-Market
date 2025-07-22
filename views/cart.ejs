@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cart</title>
+    <link rel="stylesheet" href="./styleSheets/cart.css" />
+  </head>
+  <body>
+    <div id="page">
+      <div class="removeMsg"></div>
+      <%- include("partials/header.ejs") %>
+      <div id="container">
+        <div id="cart-section">
+          <% cartItems.forEach(item => { %>
+          <div id="cart">
+            <div class="cart-card" data-id="<%= item._id %>">
+              <button class="remove-btn" data-id="<%= item._id %>">
+                Remove
+              </button>
+              <div class="card-img">
+                <img src="<%= item.img %>" alt="<%= item.name %>" />
+              </div>
+              <div class="text-area">
+                <h5 class="name"><%=item.name %>  <%=item.local %></h5>
+                <h5 class="quantity"><%= item.quantity %></h5>
+              </div>
+              <h5 class="price">-/₹<%= item.price %></h5>
+            </div>
+          </div>
+
+          <% }); %>
+        </div>
+        <div id="pay-section">
+          <% cartItems.forEach(item => { %>
+          <h5 class="price">-/₹<%= item.price %></h5>
+          <% }); %>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="/javaScripts/cart.js"></script>
+</html>

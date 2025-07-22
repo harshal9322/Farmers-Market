@@ -296,7 +296,7 @@ async function displayDairyProducts() {
           ${dItem.quantity?.quantity4 ? `<option value="${dItem.quantity.quantity4}">${dItem.quantity.quantity4}</option>` : ""}
         </select>
         <h5 class="price"></h5>
-      </div>
+
       <div class="addBtn">
         <span class="label">Add</span>
       </div>
@@ -349,7 +349,9 @@ async function addDitemsButton(dairyProducts) {
 
 
 displayDairyProducts();
-
+document.addEventListener("DOMContentLoaded", () => {
+  updateCounterDisplay();
+});
 window.addEventListener("pageshow", () => {
   totalCount = parseInt(localStorage.getItem("totalCount")) || 0;
   updateCounterDisplay();

@@ -1,0 +1,101 @@
+body{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    background-color:#F2F2F2;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+             /* success or falure msg show on display */
+#msg{
+    position: fixed;
+    z-index: 999;
+    display: none;
+    bottom: 2%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: #343A40;
+    padding: 0.5vw 0.8vw;
+    border: 1px solid rgb(246, 235, 191);
+    background-color: rgb(255, 255, 0);
+    font-weight: bold;
+    font-size: 0.8vw;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    border-radius: 3px;
+    box-shadow: 0px 2px 6px rgb(236, 236, 155);
+}
+#sign-up {
+    height: 30vw;
+    width: 35vw;
+    background-color:#FFFFFF;
+    border: 1px solid green;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input{
+    outline: none;
+    border: 1px Solid #ADB5BD;
+    background-color: #FFFFFF;
+    padding: 0.8vw;
+    margin: 0.6vw 0.5vw;
+    width: 20vw;
+    border-radius: 3px;
+    border-radius: 0.4vw;
+}
+input:hover{
+    border: 1px solid green;
+}
+input::placeholder {
+    color: #343A40;
+}
+#sign-up button {
+    color: #6C757D;
+    border: 1px solid green;
+    background-color: #F8F9FA;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+#sign-up button:hover {
+    color: cornsilk;
+    background-color: green;
+}
+
+.signbtn {
+    width: 15vw;
+    height: 2.3vw;
+    margin: 1vw 0 0 3.5vw;
+    border: 1.5px solid green;
+    background-color: #FFFFFF;
+    border-radius: 0.3vw;
+    transition: all ease-in-out 0.4s;
+}
+#sendOTP{
+    background-color: #FFFFFF;
+    border: 1px solid #ADB5BD;
+    padding: 0.3vw 0.9vw;
+    transition: all ease-in-out 0.4s;
+    border-radius: 0.3vw;
+}
+.verify {
+   background-color: #FFFFFF;
+   border: 1px solid #ADB5BD;
+   padding: 0.3vw 1vw;
+   border-radius: 3px;
+   transition: all ease-in-out 0.4s;
+}
+a{
+    color:green;
+    text-decoration: none;
+}

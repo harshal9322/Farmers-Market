@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="./styleSheets/register.css">
+</head>
+<body>
+    <div id="sign-up">
+       <form action="/register" method="POST">
+          <input type="text" placeholder="Username" name="username" required/>
+           <div class="email-otp">
+              <input type="email" placeholder="Enter Your Email" name="email" required/>
+              <button type="button" id="sendOTP"> Send OTP</button>
+           </div>
+          <div>
+              <input type="number" placeholder="Enter OTP" name="otp" required/>
+              <button type="button" class="verify-otp">Verify</button>
+          </div>
+          <div class="password">
+             <input type="password" placeholder="Set Password" name="password" /> <br>
+             <input type="password" placeholder="Confirm Password" name="confirmPassword" /> <br>
+             <a href="/login">Login</a>
+          </div>
+          
+          <button type="submit" class="signbtn">Singn Up</button>
+       </form>
+       <p id="msg"></p>
+    </div>
+</body>
+<script src="/javaScripts/register.js"></script>
+</html>

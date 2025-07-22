@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+  <meta charset="UTF-8" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Farmers Market</title>
+ 
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <!-- Your Styles -->
+  <link href="/styleSheets/style.css" rel="stylesheet" />
+
+  <!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Inline&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div id="main">
+    <div id="page1">
+
+      <!-- Navbar -->
+      <nav>
+        <div id="logo">
+          <img src="data:image/png;base64,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" alt="icon" />
+          <h1>FARMERS MARKET</h1>
+        </div>
+          
+        <div id="options">
+          <div class="input-container">
+            <input id="search" placeholder="search" type="text">
+            <i class="fas fa-search"></i>
+          </div>
+
+          <div class="cart">
+            <i class="fa fa-shopping-basket basket-icn"></i>
+            <h4><a href="#">Basket</a></h4>
+          </div>
+        </div>
+
+          <div id="user">
+              <h5><a href="/login">Login</a></h5>
+              <h5><a href="/register">Sign up</a></h5>
+          </div>
+     </nav>
+
+      <!-- Banner -->
+      <div id="part2">
+        <div id="img-banner">
+          <img src="https://media.licdn.com/dms/image/v2/C4D12AQHk65weBBwV7Q/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1520133087964?e=2147483647&v=beta&t=LAl35bkk6vYnxf7TiNOA7iSDh_dV3qZtuaMsGJQT5Zw" alt="bg-img">
+          <div class="text-overlay">
+            <h1>FRESH AND LOCAL PRODUCE</h1>
+            <p>Discover the best fresh food produce from local<br>farmers, organic vegetables, fruit and more,<br>all in one place.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vegetable Section -->
+      <div id="veg-container">
+        <div id="veg-bg">
+          <div id="veg-sec">
+            <h2>Vegetables</h2>
+            <div class="veg-select">
+              <label for="vegSelect">Choose Type of Vegetables</label>
+              <select id="vegSelect">
+                <option value="default">--Select Type--</option>
+                <option value="Leafy">Leafy Green</option>
+                <option value="Root">Root Vegetable</option>
+                <option value="Cruciferous">Cruciferous</option>
+                <option value="Nightshade">Nightshade</option>
+                <option value="Gourds">Gourds & Squash</option>
+                <option value="Others">Other Organic Veggies</option>
+              </select>
+            </div>
+            <h4><a href="#">View All</a></h4>
+          </div>
+
+          <div id="wrapper">
+            <div class="card">
+              <div class="card-img">
+                <img src="https://www.bbassets.com/media/uploads/p/l/40229409-3_3-fresho-palak.jpg" alt="spanich">
+              </div>
+              <div class="info">
+                <h5>spanich (Palak)</h5>
+                <h5 class="quantity"> 200g</h5>
+                <h5 class="price">₹35</h5>
+              </div>
+              <h5 class="addBtn">Add</h5>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- Fruit Section -->
+      <div id="fruit-container">
+        <div id="fruit-bg">
+          <div id="fruit-sec">
+            <h2> Fresh Fruits </h2>
+            <h4><a href="#">Veiw All</a></h4>
+          </div>
+
+          <div id="wrapper">
+            <div class="card">
+              <div class="card-img">
+                <img src="https://www.bbassets.com/media/uploads/p/l/40033823-4_2-fresho-apple-royal-gala-regular.jpg" alt="Apple">
+              </div>
+              <div class="info">
+                <h5>Apple - Nature's Treat</h5>
+                <h5 class="quantity"> 4pcs - (approx.500g - 600g) </h5>
+                <h5 class="price">₹160</h5>
+              </div>
+              <h5 class="addBtn">Add</h5>
+            </div>
+            
+            <div class="card">
+              <div class="card-img">
+                <img src="https://www.bbassets.com/media/uploads/p/l/40033823-4_2-fresho-apple-royal-gala-regular.jpg" alt="Apple">
+              </div>
+              <div class="info">
+                <h5>Apple - Nature's Treat</h5>
+                <h5 class="quantity"> 4pcs - (approx.500g - 600g) </h5>
+                <h5 class="price">₹160</h5>
+              </div>
+              <h5 class="addBtn">Add</h5>
+            </div>
+  
+            <div class="card">
+              <div class="card-img">
+                <img src="https://www.bbassets.com/media/uploads/p/l/40033823-4_2-fresho-apple-royal-gala-regular.jpg" alt="Apple">
+              </div>
+              <div class="info">
+                <h5>Apple - Nature's Treat</h5>
+                <h5 class="quantity"> 4pcs - (approx.500g - 600g) </h5>
+                <h5 class="price">₹160</h5>
+              </div>
+              <h5 class="addBtn">Add</h5>
+            </div>
+
+            <div class="card">
+              <div class="card-img">
+                <img src="https://www.bbassets.com/media/uploads/p/l/40033823-4_2-fresho-apple-royal-gala-regular.jpg" alt="Apple">
+              </div>
+              <div class="info">
+                <h5>Apple - Nature's Treat</h5>
+                <h5 class="quantity"> 4pcs - (approx.500g - 600g) </h5>
+                <h5 class="price">₹160</h5>
+              </div>
+              <h5 class="addBtn">Add</h5>
+            </div>
+
+            <div class="card">
+              <div class="card-img">
+                <img src="https://www.bbassets.com/media/uploads/p/l/40033823-4_2-fresho-apple-royal-gala-regular.jpg" alt="Apple">
+              </div>
+              <div class="info">
+                <h5>Apple - Nature's Treat</h5>
+                <h5 class="quantity"> 4pcs - (approx.500g - 600g) </h5>
+                <h5 class="price">₹160</h5>
+              </div>
+              <h5 class="addBtn">Add</h5>
+            </div>
+
+            <div class="card">
+              <div class="card-img">
+                <img src="https://www.bbassets.com/media/uploads/p/l/40033823-4_2-fresho-apple-royal-gala-regular.jpg" alt="Apple">
+              </div>
+              <div class="info">
+                <h5>Apple - Nature's Treat</h5>
+                <h5 class="quantity"> 4pcs - (approx.500g - 600g) </h5>
+                <h5 class="price">₹160</h5>
+              </div>
+              <h5 class="addBtn">Add</h5>
+            </div>
+
+            <div class="card">
+              <div class="card-img">
+                <img src="https://www.bbassets.com/media/uploads/p/l/40033823-4_2-fresho-apple-royal-gala-regular.jpg" alt="Apple">
+              </div>
+              <div class="info">
+                <h5>Apple - Nature's Treat</h5>
+                <h5 class="quantity"> 4pcs - (approx.500g - 600g) </h5>
+                <h5 class="price">₹160</h5>
+              </div>
+              <h5 class="addBtn">Add</h5>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+ 
+    </div>
+  </div>
+
+
+  <!-- Your JavaScript -->
+<script type="module" src="/javaScripts/app.js"></script>
+</body>
+</html>

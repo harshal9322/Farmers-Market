@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>smallHeader</title>
+
+    <style>
+        #header{
+           position:fixed;
+           background-color: #EDF7EC;
+           width: 98%;
+           height:2.5vw;
+           z-index: 9;
+           left: 1vw;
+           top: 5.82vw;
+           border-top: 1px solid rgb(166, 227, 166);
+           box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+           animation: slideDown 2s forwards;
+        }
+        @keyframes slideDown {
+              0%   { transform: translate(0%, -100%); }
+              50%  { transform: translate(0%, 0%); }
+              75% { transform: translate(0%, 0%); }
+              100% { transform: translate(0%, 0%); }
+        }
+
+        #container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5vw;
+    
+        }
+        #container a{
+            font-size: 0.9vw;
+            font-weight: 600;
+            color: #2F5D34;
+            text-decoration: none;
+            margin-top: 0.5vw;
+            letter-spacing: 1px;
+            position: relative;
+        }
+        #container a::after{
+            content: "";
+            position: absolute;
+            display: inline-block;
+            bottom: -0.5vw;
+            left: 0;
+            height: 1.8px;
+            background-color: #2F5D34;
+            width: 0%;
+            transition: width ease 0.8s;
+            z-index: 10;
+        }
+
+        #container a:hover::after{
+            width: 100%;
+        }
+        #container .dairy.clicked::after{
+            width:100%;
+        }
+        
+
+        /* Responsive:mobiles */
+        @media (max-width:574px) {
+            #header{
+                height: 4vw;
+                top: 11.99vw;
+                position: fixed;
+                z-index: 999;
+            }
+            #container a{
+                font-size: 1.7vw;
+            }
+            #container a::after{
+                height: 1px;
+            }
+
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <div id="container">
+            <a class="veg" href="#">Fresh Vegetables</a>
+            <a class="fruit" href="#">Fresh Fruits</a>
+            <a class="dairy <%= page === 'dairy' ? 'clicked':' ' %>" href="/api/dairy/all">Dairy Products</a>
+        </div>
+    </div>
+
+</body>
+</html>
