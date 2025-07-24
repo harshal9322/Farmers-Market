@@ -40,8 +40,8 @@ app.use(
 const dairyRoutes = require("./routes/dairyRoutes");
 app.use("/api/dairy", dairyRoutes);
 
-const searchRoutes = require("./routes/searchRoutes");
-app.use("/search", searchRoutes);
+const srchroute = require("./routes/srchRoute.js");
+app.use("/search",srchroute);
 
 mongoose.connect("mongodb://127.0.0.1:27017/farmersMarket");
 
