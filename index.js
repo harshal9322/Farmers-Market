@@ -196,21 +196,53 @@ app.get("/api/fruit", async (req, res) => {
 app.post("/add-to-cart", authenticateToken, async (req, res) => {
   let cartItem = req.body;
   const user = await User.findById(req.userId);
+
   if (!user) return res.send("user not found");
 
-  user.cart.push(cartItem);
+  const existingItem = user.cart.find(
+    (item) => item.name === cartItem.name && item.quantity === cartItem.quantity
+  );
+
+  if (existingItem) {
+    existingItem.count = (existingItem.count || 1) + 1;
+  } else {
+    user.cart.push(cartItem);
+  }
+
   await user.save();
-  res.json("One Item Added");
+  res.json({
+    message:"One Item Added",
+    updateCounter : user.cart.length
+  });
 });
+
+
+app.post("/remove-item", authenticateToken, async (req, res)=>{
+  const cartItem = req.body;
+  const user = await User.findById(req.userId);
+  if(!user) return res.send("User Not Found");  
+  const existingItem = user.cart.find(
+    (item)=> { item.quantity === cartItem.quantity && item.name === cartItem.name}
+  );
+  if(existingItem){
+    existingItem.count = (existingItem.count || 1)-1;
+  }
+    await user.save();
+    res.json({message:"One Item Removed"});
+});
+
 
 app.get("/cart", authenticateToken, async (req, res) => {
   const userId = req.userId;
   const user = await User.findById(userId);
   if (!user) return res.send("user not found");
-  res.render("cart.ejs", { cartItems: user.cart, email: user.email });
+  res.render("cart.ejs", {
+    cartItems: user.cart,
+    email: user.email,
+  });
 });
 
-app.post("/remove-item", authenticateToken, async (req, res) => {
+app.post("/delete-item", authenticateToken, async (req, res) => {
   const { id } = req.body;
 
   try {

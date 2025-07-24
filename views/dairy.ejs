@@ -118,27 +118,27 @@
 
       // -----------------------------------------------------------------------------//
 
-      function updateCounterDisplay() {
-        const counter = document.querySelector(".counter");
-        const cart = document.querySelector("#cart");
-        const cartCounter = document.querySelector(".cart-counter");
-        if (!counter) return;
-        if (totalCount === 0) {
-          counter.style.display = "none";
-          cart.style.display = "none";
-          cartCounter.style.display = "none";
-        } else {
-          counter.style.display = "inline-block";
-          counter.innerText = totalCount;
-          cartCounter.innerText = totalCount;
-          cartCounter.style.display = "inline-block";
-          cart.style.display = "flex";
+
+        function updateCounterDisplay(updateCounter) {
+          const counter = document.querySelector(".counter");
+          const cart = document.querySelector("#cart");
+          const cartCounter = document.querySelector(".cart-counter");
+          if (!counter) return;
+          if (updateCounter === 0) {
+            counter.style.display = "none";
+            cart.style.display = "none";
+            cartCounter.style.display = "none";
+          } else {
+            counter.style.display = "inline-block";
+            counter.innerText = updateCounter;
+            cartCounter.innerText = updateCounter;
+            cartCounter.style.display = "inline-block";
+            cart.style.display = "flex";
+          }
         }
-      }
 
       const allCards = document.querySelectorAll("#card");
-      let totalCount = parseInt(localStorage.getItem("totalCount")) || 0;
-
+      let count = 0;
       allCards.forEach((card) => {
         const quantity = card.querySelector("#quantity");
         const displayPrice = card.querySelector(".price");
@@ -157,12 +157,14 @@
           const selectOption = quantity.options[quantity.selectedIndex];
           const quantitySelect = selectOption.value;
           const price = selectOption.dataset.price;
+          count++;
 
           const cartItem = {
             name: name,
             img: img,
             price: price,
             quantity: quantitySelect,
+            count: count,
           };
           const res = await fetch("/add-to-cart", {
             method: "POST",
@@ -172,27 +174,20 @@
             body: JSON.stringify(cartItem),
           });
           const data = await res.json();
-          if (data) {
+          if (data.message && data.updateCounter) {
             const addMsg = document.querySelector(".added");
             addMsg.style.display = "flex";
-            addMsg.innerText = data;
+            addMsg.innerText = data.message;
+            window.addEventListener("DOMContentLoaded", () => {updateCounterDisplay(data.updateCounter);});
+
             setTimeout(() => {
               addMsg.style.display = "none";
               addMsg.innerText = "";
             }, 1500);
           }
-
-          totalCount++;
-          localStorage.setItem("totalCount", totalCount);
-          console.log("btn clicked");
-          updateCounterDisplay();
         });
       });
 
-      window.addEventListener("pageshow", () => {
-        totalCount = parseInt(localStorage.getItem("totalCount", totalCount));
-        updateCounterDisplay();
-      });
     </script>
   </body>
 </html>

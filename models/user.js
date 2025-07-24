@@ -3,7 +3,10 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
     username:String,
     email:String,
-    password:String,
+    password:{
+        type:String,
+        min:[6,"Password must be at least 6 caracters long,"]
+    },
     confirm_password:String,
     resetToken:String,
     resetTokenExpiry:String,
@@ -13,6 +16,7 @@ const userSchema = new mongoose.Schema({
         local:String,
         quantity:String,
         price:Number,
+        count:Number,
         img:String,
     }]
 });
