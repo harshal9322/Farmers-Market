@@ -248,11 +248,14 @@
         <h1>FARMERS MARKET</h1>
       </div>
 
-      <div id="options">
-        <div class="input-container">
-          <input id="search" placeholder="search" type="text" />
-          <i class="fas fa-search"></i>
-        </div>
+       <form action="/search" method="post">
+            <div id="options">
+          <div class="input-container">
+            <input id="search" placeholder="search" name="fru" type="text">
+            <i class="fas fa-search"></i>
+             <button type="submit"><i class="fas fa-search"></i></button>
+          </div>
+          </form>
 
         <div class="cart">
           <span class="counter"></span>
