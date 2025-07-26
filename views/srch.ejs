@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= product.name %> - Product Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+
+  <div class="max-w-md mx-auto bg-white shadow-lg rounded-xl p-6 text-center">
+    <img src="<%= product.img %>" alt="<%= product.name %>" class="w-full h-48 object-cover rounded-md mb-4">
+    <h2 class="text-xl font-bold"><%= product.name %> / <%= product.local %></h2>
+
+    <div class="my-4">
+      <label for="quantity" class="block mb-1">Select Quantity</label>
+      <select id="quantity" class="border px-3 py-2 rounded w-full">
+        <% if (product.quantity.quantity1) { %>
+          <option value="<%= product.quantity.quantity1 %>" data-price="<%= product.quantity.price1 %>">
+            <%= product.quantity.quantity1 %>
+          </option>
+        <% } %>
+        <% if (product.quantity.quantity2) { %>
+          <option value="<%= product.quantity.quantity2 %>" data-price="<%= product.quantity.price2 %>">
+            <%= product.quantity.quantity2 %>
+          </option>
+        <% } %>
+        <% if (product.quantity.quantity3) { %>
+          <option value="<%= product.quantity.quantity3 %>" data-price="<%= product.quantity.price3 %>">
+            <%= product.quantity.quantity3 %>
+          </option>
+        <% } %>
+        <% if (product.quantity.quantity4) { %>
+          <option value="<%= product.quantity.quantity4 %>" data-price="<%= product.quantity.price4 %>">
+            <%= product.quantity.quantity4 %>
+          </option>
+        <% } %>
+      </select>
+    </div>
+
+    <div class="text-lg mb-4">
+      Price: <span id="price" class="font-semibold text-green-600">₹0</span>
+    </div>
+
+    <button id="add-to-cart" class="bg-green-600 text-white px-4 py-2 rounded">Add to Cart</button>
+  </div>
+
+  <script>
+
+
+ 
+
+
+    const quantitySelect = document.getElementById("quantity");
+    const priceDisplay = document.getElementById("price");
+    const addToCartBtn = document.getElementById("add-to-cart");
+
+    // Show price on load and quantity change
+    function updatePrice() {
+      const selected = quantitySelect.options[quantitySelect.selectedIndex];
+      priceDisplay.innerText = "₹" + selected.dataset.price;
+    }
+
+    quantitySelect.addEventListener("change", updatePrice);
+    updatePrice(); // Initial call
+
+    addToCartBtn.addEventListener("click", async () => {
+       const selected = quantitySelect.options[quantitySelect.selectedIndex];
+      const item = {
+        name: "<%= product.name %>",
+        local: "<%= product.local %>",
+        quantity: selected.value,
+        price: parseInt(selected.dataset.price),
+        count: 1,
+        img: "<%= product.img %>"
+      };
+
+
+
+      try {
+        const res = await fetch("/add-to-cart", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(item)
+        });
+
+        if (!res.ok)
+          alert("Failed to add item.");
+        
+      } catch (err) {
+        console.error("Add to cart failed", err);
+        alert("Error occurred while adding to cart.");
+      }
+    });
+
+
+
+
+    
+  </script>
+ 
+</body>
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= product.name %> - Product Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+
+  <div class="max-w-md mx-auto bg-white shadow-lg rounded-xl p-6 text-center">
+    <img src="<%= product.img %>" alt="<%= product.name %>" class="w-full h-48 object-cover rounded-md mb-4">
+    <h2 class="text-xl font-bold"><%= product.name %> / <%= product.local %></h2>
+
+    <div class="my-4">
+      <label for="quantity" class="block mb-1">Select Quantity</label>
+      <select id="quantity" class="border px-3 py-2 rounded w-full">
+        <% if (product.quantity.quantity1) { %>
+          <option value="<%= product.quantity.quantity1 %>" data-price="<%= product.quantity.price1 %>">
+            <%= product.quantity.quantity1 %>
+          </option>
+        <% } %>
+        <% if (product.quantity.quantity2) { %>
+          <option value="<%= product.quantity.quantity2 %>" data-price="<%= product.quantity.price2 %>">
+            <%= product.quantity.quantity2 %>
+          </option>
+        <% } %>
+        <% if (product.quantity.quantity3) { %>
+          <option value="<%= product.quantity.quantity3 %>" data-price="<%= product.quantity.price3 %>">
+            <%= product.quantity.quantity3 %>
+          </option>
+        <% } %>
+        <% if (product.quantity.quantity4) { %>
+          <option value="<%= product.quantity.quantity4 %>" data-price="<%= product.quantity.price4 %>">
+            <%= product.quantity.quantity4 %>
+          </option>
+        <% } %>
+      </select>
+    </div>
+
+    <div class="text-lg mb-4">
+      Price: <span id="price" class="font-semibold text-green-600">₹0</span>
+    </div>
+
+    <div id="action-area" data-product='<%- JSON.stringify(product) %>' data-cart='<%- JSON.stringify(cartItem || null) %>'></div>
+  </div>
+
+  <script>
+    const quantitySelect = document.getElementById("quantity");
+    const priceDisplay = document.getElementById("price");
+    const actionArea = document.getElementById("action-area");
+
+    const product = JSON.parse(actionArea.dataset.product);
+    const cartItem = JSON.parse(actionArea.dataset.cart);
+
+    // Update price display
+    function updatePrice() {
+      const selected = quantitySelect.options[quantitySelect.selectedIndex];
+      priceDisplay.innerText = "₹" + selected.dataset.price;
+    }
+
+    quantitySelect.addEventListener("change", updatePrice);
+    updatePrice(); // Call once on load
+
+    if (!cartItem) {
+      const btn = document.createElement("button");
+      btn.textContent = "Add to Cart";
+      btn.className = "bg-green-600 text-white px-4 py-2 rounded";
+      btn.onclick = async () => {
+        const selected = quantitySelect.options[quantitySelect.selectedIndex];
+        const item = {
+          name: product.name,
+          local: product.local,
+          quantity: selected.value,
+          price: parseInt(selected.dataset.price),
+          count: 1,
+          img: product.img
+        };
+
+        const res = await fetch("/add-to-cart", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(item)
+        });
+
+        if (res.ok) {
+          alert("Item added to cart");
+          location.reload();
+        }
+      };
+      actionArea.appendChild(btn);
+    } else {
+      const minus = document.createElement("button");
+      const span = document.createElement("span");
+      const plus = document.createElement("button");
+
+      minus.textContent = "-";
+      span.textContent = cartItem.count;
+      plus.textContent = "+";
+
+      minus.className = "bg-red-600 text-white px-3 py-1 rounded-l";
+      plus.className = "bg-blue-600 text-white px-3 py-1 rounded-r";
+      span.className = "bg-white px-4 py-1 border";
+
+      minus.onclick = () => updateQty(cartItem._id, -1);
+      plus.onclick = () => updateQty(cartItem._id, 1);
+
+      actionArea.appendChild(minus);
+      actionArea.appendChild(span);
+      actionArea.appendChild(plus);
+    }
+
+    async function updateQty(id, delta) {
+      const res = await fetch("/update-cart-qty", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, delta })
+      });
+
+      if (res.ok) location.reload();
+    }
+  </script>
+</body>
+</html> -->

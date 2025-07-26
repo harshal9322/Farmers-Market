@@ -83,8 +83,8 @@
 <body>
     <div id="header">
         <div id="container">
-            <a class="veg" href="#">Fresh Vegetables</a>
-            <a class="fruit" href="#">Fresh Fruits</a>
+            <a class="veg" <%= page === 'veg'? 'clicked' : ' '%> href="/api/veg/all">Fresh Vegetables</a>
+            <a class="fruit" <%= page ==='fruit' ? 'clicked' : ' '%>: href="/api/fruit/all">Fresh Fruits</a>
             <a class="dairy <%= page === 'dairy' ? 'clicked':' ' %>" href="/api/dairy/all">Dairy Products</a>
         </div>
     </div>
