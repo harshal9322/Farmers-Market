@@ -1,24 +1,7 @@
+import { updateCounterDisplay } from "./updateCounterDisplay.js";
+await updateCounterDisplay();
+
 let cart = {};
-// let totalCount = parseInt(localStorage.getItem("totalCount")) || 0;
-updateCounterDisplay();
-
-function updateCounterDisplay(updateCounter=0) {
-  const counter = document.querySelector(".counter");
-  const cart = document.querySelector("#cart");
-  const cartCounter = document.querySelector(".cart-counter");
-
-  if (updateCounter === 0) {
-    counter.style.display = "none";
-    cart.style.display = "none";
-    cartCounter.style.display = "none";
-  } else {
-    counter.style.display = "inline-block";
-    counter.innerText = updateCounter;
-    counter.innerText = updateCounter;
-    cartCounter.style.display = "inline-block";
-    cart.style.display = "flex";
-  }
-}
 
 function getPriceFromQty(item, selectedQtyKey) {
   switch (selectedQtyKey) {
@@ -34,8 +17,7 @@ function getPriceFromQty(item, selectedQtyKey) {
       return 0;
   }
 }
-
-function saveToCart(item, count, selectedQty, price) {
+async function saveToCart(item, count, selectedQty, price) {
   if (count === 0) {
     delete cart[item.name];
   } else {
@@ -48,7 +30,7 @@ function saveToCart(item, count, selectedQty, price) {
       img: item.img,
     };
   }
-  updateCounterDisplay();
+  await updateCounterDisplay();
 }
 
 const selectElement = document.getElementById("vegSelect");
@@ -65,6 +47,7 @@ async function sendToBackend(cartItem) {
     });
 
     const data = await res.json();
+    await updateCounterDisplay();
     if (data) {
       const addMsg = document.querySelector(".added");
       addMsg.style.display = "flex";
@@ -73,11 +56,6 @@ async function sendToBackend(cartItem) {
         addMsg.style.display = "none";
         addMsg.innerText = "";
       }, 1500);
-
-      const counter = document.querySelector(".counter");
-      if (data.updateCounter !== undefined) {
-        updateCounterDisplay(data.updateCounter);
-      }
     }
 
     if (!res.ok) {
@@ -110,26 +88,22 @@ async function changeVegies(vegType) {
         <div class="info">
           <h5>${veg.name} (${veg.local})</h5>
           <select id="quantity">
-            ${
-              veg.quantity?.quantity1
-                ? `<option value="${veg.quantity.quantity1}">${veg.quantity.quantity1}</option>`
-                : ""
-            }
-            ${
-              veg.quantity?.quantity2
-                ? `<option value="${veg.quantity.quantity2}">${veg.quantity.quantity2}</option>`
-                : ""
-            }
-            ${
-              veg.quantity?.quantity3
-                ? `<option value="${veg.quantity.quantity3}">${veg.quantity.quantity3}</option>`
-                : ""
-            }
-            ${
-              veg.quantity?.quantity4
-                ? `<option value="${veg.quantity.quantity4}">${veg.quantity.quantity4}</option>`
-                : ""
-            }
+            ${veg.quantity?.quantity1
+          ? `<option value="${veg.quantity.quantity1}">${veg.quantity.quantity1}</option>`
+          : ""
+        }
+            ${veg.quantity?.quantity2
+          ? `<option value="${veg.quantity.quantity2}">${veg.quantity.quantity2}</option>`
+          : ""
+        }
+            ${veg.quantity?.quantity3
+          ? `<option value="${veg.quantity.quantity3}">${veg.quantity.quantity3}</option>`
+          : ""
+        }
+            ${veg.quantity?.quantity4
+          ? `<option value="${veg.quantity.quantity4}">${veg.quantity.quantity4}</option>`
+          : ""
+        }
           </select>
           <h5 class="price">₹${veg.price}</h5>
         </div>
@@ -211,26 +185,22 @@ async function displayFruits() {
       <div class="info">
         <h5>${fruit.name} ${fruit.local}</h5>
         <select id="quantity">
-          ${
-            fruit.quantity?.quantity1
-              ? `<option value="${fruit.quantity.quantity1}">${fruit.quantity.quantity1}</option>`
-              : ""
-          }
-          ${
-            fruit.quantity?.quantity2
-              ? `<option value="${fruit.quantity.quantity2}">${fruit.quantity.quantity2}</option>`
-              : ""
-          }
-          ${
-            fruit.quantity?.quantity3
-              ? `<option value="${fruit.quantity.quantity3}">${fruit.quantity.quantity3}</option>`
-              : ""
-          }
-          ${
-            fruit.quantity?.quantity4
-              ? `<option value="${fruit.quantity.quantity4}">${fruit.quantity.quantity4}</option>`
-              : ""
-          }
+          ${fruit.quantity?.quantity1
+        ? `<option value="${fruit.quantity.quantity1}">${fruit.quantity.quantity1}</option>`
+        : ""
+      }
+          ${fruit.quantity?.quantity2
+        ? `<option value="${fruit.quantity.quantity2}">${fruit.quantity.quantity2}</option>`
+        : ""
+      }
+          ${fruit.quantity?.quantity3
+        ? `<option value="${fruit.quantity.quantity3}">${fruit.quantity.quantity3}</option>`
+        : ""
+      }
+          ${fruit.quantity?.quantity4
+        ? `<option value="${fruit.quantity.quantity4}">${fruit.quantity.quantity4}</option>`
+        : ""
+      }
         </select>
         <h5 class="price">₹${fruit.quantity.price}</h5>
       </div>
@@ -305,26 +275,22 @@ async function displayDairyProducts() {
       <div class="info">
         <h5>${dItem.name}</h5>
         <select id="quantity">
-          ${
-            dItem.quantity?.quantity1
-              ? `<option value="${dItem.quantity.quantity1}">${dItem.quantity.quantity1}</option>`
-              : ""
-          }
-          ${
-            dItem.quantity?.quantity2
-              ? `<option value="${dItem.quantity.quantity2}">${dItem.quantity.quantity2}</option>`
-              : ""
-          }
-          ${
-            dItem.quantity?.quantity3
-              ? `<option value="${dItem.quantity.quantity3}">${dItem.quantity.quantity3}</option>`
-              : ""
-          }
-          ${
-            dItem.quantity?.quantity4
-              ? `<option value="${dItem.quantity.quantity4}">${dItem.quantity.quantity4}</option>`
-              : ""
-          }
+          ${dItem.quantity?.quantity1
+        ? `<option value="${dItem.quantity.quantity1}">${dItem.quantity.quantity1}</option>`
+        : ""
+      }
+          ${dItem.quantity?.quantity2
+        ? `<option value="${dItem.quantity.quantity2}">${dItem.quantity.quantity2}</option>`
+        : ""
+      }
+          ${dItem.quantity?.quantity3
+        ? `<option value="${dItem.quantity.quantity3}">${dItem.quantity.quantity3}</option>`
+        : ""
+      }
+          ${dItem.quantity?.quantity4
+        ? `<option value="${dItem.quantity.quantity4}">${dItem.quantity.quantity4}</option>`
+        : ""
+      }
         </select>
         <h5 class="price"></h5>
 
@@ -374,5 +340,7 @@ async function addDitemsButton(dairyProducts) {
 }
 
 displayDairyProducts();
-document.addEventListener("DOMContentLoaded", () => {
+
+window.addEventListener("pageshow", async (event) => {
+  await updateCounterDisplay();
 });

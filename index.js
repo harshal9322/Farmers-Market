@@ -40,18 +40,18 @@ app.use(
 const dairyRoutes = require("./routes/dairyRoutes");
 app.use("/api/dairy", dairyRoutes);
 
-const searchRoutes = require("./routes/searchRoutes");
-app.use("/search", searchRoutes);
+const srchRoute = require("./routes/srchRoute.js");
+app.use("/search", srchRoute);
 
 mongoose.connect("mongodb://127.0.0.1:27017/farmersMarket");
 
 // -------------------------------------------------------//
-
+require('dotenv').config();
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "harsh932206@gmail.com",
-    pass: "yvka jkiu zphw wckj",
+    user: GMMIL_USER,
+    pass: GMAIL_PASS,
   },
 });
 
@@ -202,9 +202,10 @@ app.post("/add-to-cart", authenticateToken, async (req, res) => {
   const existingItem = user.cart.find(
     (item) => item.name === cartItem.name && item.quantity === cartItem.quantity
   );
-
+   let currCount = 1;
   if (existingItem) {
     existingItem.count = (existingItem.count || 1) + 1;
+    currCount = existingItem.count;
   } else {
     user.cart.push(cartItem);
   }
@@ -212,23 +213,38 @@ app.post("/add-to-cart", authenticateToken, async (req, res) => {
   await user.save();
   res.json({
     message:"One Item Added",
-    updateCounter : user.cart.length
+    count:currCount
   });
 });
 
+app.get("/cart-count", authenticateToken, async (req, res)=>{
+  const user = await User.findById(req.userId);
+  if(!user) return res.send("User Not Found");
+  res.send({cartCount:user.cart.length});
+
+})
 
 app.post("/remove-item", authenticateToken, async (req, res)=>{
   const cartItem = req.body;
   const user = await User.findById(req.userId);
   if(!user) return res.send("User Not Found");  
   const existingItem = user.cart.find(
-    (item)=> { item.quantity === cartItem.quantity && item.name === cartItem.name}
+    (item)=> item.quantity === cartItem.quantity && item.name === cartItem.name
   );
+
+  let currCount = 1;
   if(existingItem){
     existingItem.count = (existingItem.count || 1)-1;
+    currCount = existingItem.count;
+    if(existingItem.count === 0){
+      user.cart.pull(existingItem);
+    }
   }
     await user.save();
-    res.json({message:"One Item Removed"});
+    res.json({
+      message:"One Item Removed",
+      count:currCount
+    });
 });
 
 
@@ -249,12 +265,10 @@ app.post("/delete-item", authenticateToken, async (req, res) => {
     const user = await User.findById(req.userId);
     if (!user) return res.status(404).json({ success: false });
 
-    const beforeLength = user.cart.length;
-    user.cart = user.cart.filter((item) => item._id.toString() !== id);
+    user.cart.pull({_id:id});
     await user.save();
 
-    const success = user.cart.length < beforeLength;
-    res.json({ message: "One Item Removed", success });
+    res.json({ message: "One Item Deleted", success:true });
   } catch (err) {
     console.error("Error removing item:", err);
     res.status(500).json({ success: false });
