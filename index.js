@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+require('dotenv').config();
 const sendOTP = require("./mailer.js");
 const nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
@@ -9,7 +10,7 @@ const User = require("./models/user");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const session = require("express-session");
-require('dotenv').config();
+
 
 const veg = require("./models/veg");
 const fruit = require("./models/fruit");
@@ -57,7 +58,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.GMMIL_USER,
+    user: process.env.GMAIL_USER,
     pass: process.env.GMAIL_PASS,
   },
 });
