@@ -9,6 +9,7 @@ const User = require("./models/user");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const session = require("express-session");
+require('dotenv').config();
 
 const veg = require("./models/veg");
 const fruit = require("./models/fruit");
@@ -42,8 +43,9 @@ app.use("/api/dairy", dairyRoutes);
 
 const srchRoute = require("./routes/srchRoute.js");
 app.use("/search", srchRoute);
+console.log("Mongo URI from env:", process.env.MONGODB_URI); // add this line
 
-mongoose.connect(process.env.MONGO_URL, {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
@@ -51,7 +53,7 @@ mongoose.connect(process.env.MONGO_URL, {
 .catch(err => console.error("MongoDB connection error:", err));
 
 // -------------------------------------------------------//
-require('dotenv').config();
+
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -280,7 +282,7 @@ app.post("/delete-item", authenticateToken, async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });
