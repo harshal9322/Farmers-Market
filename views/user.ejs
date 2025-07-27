@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
-  <meta charset="UTF-8" /> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Farmers Market</title>
- 
+
   <!-- Swiper CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
-  <!-- Your Styles -->
+  <!-- CSS -->
   <link href="/styleSheets/style.css" rel="stylesheet" />
 
 
   <!-- FontAwesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Inline&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Inline&family=Roboto+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
 </head>
+
 <body>
 
   <div id="main">
     <div id="page1">
-      
+
       <a href="/cart">
         <div id="cart">
           <div class="cart-icn">
@@ -31,111 +35,116 @@
               <img src="./images/icons/shopping-basket.png" alt="basket icon">
             </div>
           </div>
-          <span class="view-basket">View Basket</span> 
+          <span class="view-basket">View Basket</span>
         </div>
       </a>
-        
+
       <!-- Navbar -->
       <%- include("partials/header") %>
 
-     <% if (message) { %>
-        <div id="success-msg">
-          <%= message %>
-        </div>
-
-        <script>
-           setTimeout(() => {
-               const msgDiv = document.getElementById("success-msg");
-               if (msgDiv) {
-                  msgDiv.style.display = "none";
-                }
-             }, 5000);
-        </script>
-      <% } %>
-
-    <!-- small Header -->
-
-    <%- include("partials/smallHeader",{page:"user"}) %>
-
-      <!-- Banner -->
-      <div id="part2">
-        <div id="img-banner">
-          <img src="https://media.licdn.com/dms/image/v2/C4D12AQHk65weBBwV7Q/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1520133087964?e=2147483647&v=beta&t=LAl35bkk6vYnxf7TiNOA7iSDh_dV3qZtuaMsGJQT5Zw" alt="bg-img">
-          <div class="text-overlay">
-            <h1>FRESH AND LOCAL PRODUCE</h1>
-            <p>Discover the best fresh food produce from local<br>farmers, organic vegetables, fruit and more,<br>all in one place.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Vegetable Section -->
-      <div id="veg-container">
-        <div id="veg-bg">
-          <div id="veg-sec">
-            <h2>Vegetables</h2>
-            <div class="veg-select">
-              <label for="vegSelect">Choose Type of Vegetables</label>
-              <select id="vegSelect">
-                <option value="default">--Select Type--</option>
-                <option value="Leafy">Leafy Green</option>
-                <option value="Root">Root Vegetable</option>
-                <option value="Cruciferous">Cruciferous</option>
-                <option value="Nightshade">Nightshade</option>
-                <option value="Gourds">Gourds & Squash</option>
-                <option value="Others">Other Organic Veggies</option>
-              </select>
-            </div>
-            <h4><a href="#">View All</a></h4>
+        <% if (message) { %>
+          <div id="success-msg">
+            <%= message %>
           </div>
 
-          <div id="wrapper">
+          <script>
+            setTimeout(() => {
+              const msgDiv = document.getElementById("success-msg");
+              if (msgDiv) {
+                msgDiv.style.display = "none";
+              }
+            }, 5000);
+          </script>
+          <% } %>
 
-          </div>
+            <!-- small Header -->
 
-        </div>
-      </div>
+            <%- include("partials/smallHeader",{page:"user"}) %>
+
+              <!-- Banner -->
+              <div id="part2">
+                <div id="img-banner">
+                  <video autoplay loop muted>
+                    <source src="/videos/veg1.mp4" type="video/mp4">
+                  </video>
+
+                  <div class="text-overlay">
+                    <h1>FRESH AND LOCAL PRODUCE</h1>
+                    <p>Discover the best fresh food produce from local<br>farmers, organic vegetables, fruit and
+                      more,<br>all in one place.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Vegetable Section -->
+              <div id="veg-container">
+                <div id="veg-bg">
+                  <div id="veg-sec">
+                    <h2>Vegetables</h2>
+                    <div class="veg-select">
+                      <label for="vegSelect">Choose Type of Vegetables</label>
+                      <select id="vegSelect">
+                        <option value="default">--Select Type--</option>
+                        <option value="Leafy">Leafy Green</option>
+                        <option value="Root">Root Vegetable</option>
+                        <option value="Cruciferous">Cruciferous</option>
+                        <option value="Nightshade">Nightshade</option>
+                        <option value="Gourds">Gourds & Squash</option>
+                        <option value="Others">Other Organic Veggies</option>
+                      </select>
+                    </div>
+                    <h4><a href="#">View All</a></h4>
+                  </div>
+
+                  <div id="wrapper">
+
+                  </div>
+
+                </div>
+              </div>
 
 
-      <!-- Fruit Section -->
-      <div id="fruit-container">
-        <div id="fruit-bg">
-          <div id="fruit-sec">
-            <h2> Fresh Fruits </h2>
-            <h4><a href="#">Veiw All</a></h4>
-          </div>
+              <!-- Fruit Section -->
+              <div id="fruit-container">
+                <div id="fruit-bg">
+                  <div id="fruit-sec">
+                    <h2> Fresh Fruits </h2>
+                    <h4><a href="#">Veiw All</a></h4>
+                  </div>
 
-          <div id="fruitWrapper">
-            
-          </div>
-        </div>
+                  <div id="fruitWrapper">
 
-      </div>
+                  </div>
+                </div>
+
+              </div>
 
 
-      <!-- Dairy Section -->
+              <!-- Dairy Section -->
 
-      <div id="dairy-container">
-        <div id="dairy-bg">
-          <div id="dairy-sec">
-            <h2> From The Dairy </h2>
-            <h4><a href="#">Veiw All</a></h4>
-          </div>
+              <div id="dairy-container">
+                <div id="dairy-bg">
+                  <div id="dairy-sec">
+                    <h2> From The Dairy </h2>
+                    <h4><a href="#">Veiw All</a></h4>
+                  </div>
 
-          <div id="dairyWrapper">
-            
-          </div>
-               
-          </div>
-        </div>
+                  <div id="dairyWrapper">
 
-      </div>
-                         <!-- // when items add to cart // -->
-      <span class="added"></span>
+                  </div>
+
+                </div>
+              </div>
+
     </div>
+    <!-- // when items add to cart // -->
+    <span class="added"></span>
+  </div>
   </div>
 
-  
+
   <!-- Your JavaScript -->
   <script type="module" src="/javaScripts/app.js"></script>
 </body>
+
 </html>
