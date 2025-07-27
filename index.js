@@ -43,7 +43,12 @@ app.use("/api/dairy", dairyRoutes);
 const srchRoute = require("./routes/srchRoute.js");
 app.use("/search", srchRoute);
 
-mongoose.connect("mongodb://127.0.0.1:27017/farmersMarket");
+mongoose.connect(process.env.MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log("MongoDB connected"))
+.catch(err => console.error("MongoDB connection error:", err));
 
 // -------------------------------------------------------//
 require('dotenv').config();
