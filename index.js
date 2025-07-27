@@ -39,8 +39,12 @@ app.use(
   })
 );
 
-const dairyRoutes = require("./routes/dairyRoutes");
+
+const dairyRoutes = require("./routes/dairyRoutes.js");
+const vegRoutes = require("./routes/vegRoutes.js");
+
 app.use("/api/dairy", dairyRoutes);
+app.use("/api/veg", vegRoutes);
 
 const srchRoute = require("./routes/srchRoute.js");
 app.use("/search", srchRoute);
