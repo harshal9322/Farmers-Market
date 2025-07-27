@@ -17,4 +17,4 @@ const allVegSchema = new mongoose.Schema({
     color:String
 });
 
-module.exports = mongoose.model("allDairy", allVegSchema);
+module.exports = mongoose.model("allVeg", allVegSchema);

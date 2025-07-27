@@ -17,7 +17,7 @@ router.get("/", authenticateToken, async (req, res) => {
 router.get("/all", authenticateToken, async (req, res) => {
   try {
     const allDairy = await AllDairy.find({});
-    res.render("dairy", { products: allDairy });
+    res.render("dairy.ejs", { products: allDairy });
   } catch (error) {
     console.error(
       "failed to rendering page or Error fetching dairy products:",
