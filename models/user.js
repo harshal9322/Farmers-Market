@@ -5,7 +5,6 @@ const userSchema = new mongoose.Schema({
     email:String,
     password:{
         type:String,
-        min:[6,"Password must be at least 6 caracters long,"]
     },
     confirm_password:String,
     resetToken:String,
