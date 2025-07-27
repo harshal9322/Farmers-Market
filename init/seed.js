@@ -106,27 +106,27 @@ const { deleteMany } = require("../models/fruit");
 // allDairyData   //
 
 
-// async function seedDb() {
-//    try {
+async function seedDb() {
+   try {
 
-//       await mongoose.connect(process.env.MONGODB_URL, {
-//          useNewUrlParser: true,
-//          useUnifiedTopology: true
-//       })
-//       await allDairy.deleteMany({});
-//       console.log("delete fruits");
+      await mongoose.connect(process.env.MONGODB_URL, {
+         useNewUrlParser: true,
+         useUnifiedTopology: true
+      })
+      await allDairy.deleteMany({});
+      console.log("delete fruits");
 
-//       for (let key in allDairyData) {
-//          const dairy = allDairyData[key];
-//          await allDairy.create(dairy);
-//          console.log("seeded:", dairy);
-//       }
+      for (let key in allDairyData) {
+         const dairy = allDairyData[key];
+         await allDairy.create(dairy);
+         console.log("seeded:", dairy);
+      }
 
-//    } catch (err) {
-//       console.error("❌ Error seeding DB:", err);
-//    } finally {
-//       await mongoose.disconnect();
-//    }
-// }
+   } catch (err) {
+      console.error("❌ Error seeding DB:", err);
+   } finally {
+      await mongoose.disconnect();
+   }
+}
 
-// seedDb();
+seedDb();

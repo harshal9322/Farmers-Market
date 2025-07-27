@@ -119,13 +119,12 @@
       }, 3000);
 
       // -----------------------------------------------------------------------------//
-
+      
       const allCards = document.querySelectorAll("#card");
-      let count = 0;
       allCards.forEach((card) => {
         const quantity = card.querySelector("#quantity");
         const displayPrice = card.querySelector(".price");
-
+        let count = 0;
         quantity.addEventListener("change", () => {
           const selectOption = quantity.options[quantity.selectedIndex];
           const price = selectOption.dataset.price;
@@ -140,14 +139,13 @@
           const selectOption = quantity.options[quantity.selectedIndex];
           const quantitySelect = selectOption.value;
           const price = selectOption.dataset.price;
-          count++;
 
           const cartItem = {
             name: name,
             img: img,
             price: price,
             quantity: quantitySelect,
-            count: count,
+            count: 1,
           };
 
           const res = await fetch("/add-to-cart", {

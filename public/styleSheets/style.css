@@ -130,7 +130,7 @@
     display: block;
     overflow: hidden;
 }
-#img-banner img{
+#img-banner video{
     height: 100%;
     width: 100%;
     display: block;
