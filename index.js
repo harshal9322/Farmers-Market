@@ -44,9 +44,8 @@ app.use("/api/dairy", dairyRoutes);
 
 const srchRoute = require("./routes/srchRoute.js");
 app.use("/search", srchRoute);
-console.log("Mongo URI from env:", process.env.MONGODB_URI); // add this line
 
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect(process.env.MONGODB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
