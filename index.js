@@ -49,8 +49,8 @@ mongoose.connect(process.env.MONGODB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-.then(() => console.log("MongoDB connected"))
-.catch(err => console.error("MongoDB connection error:", err));
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.error("MongoDB connection error:", err));
 
 // -------------------------------------------------------//
 
@@ -106,21 +106,25 @@ app.post("/verify-otp", (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-  let { username, email, password, confirmPassword } = req.body;
+  try {
+    let { username, email, password, confirmPassword } = req.body;
 
-  if (!verifiedEmails.has(email)) {
-    return res.json("Please verify OTP first.");
-  }
+    if (!verifiedEmails.has(email)) {
+      return res.status(400).json({ message: "Please verify OTP first." });
+    }
 
-  const usernameExists = await User.findOne({ username: username });
-  if (usernameExists) {
-    return res.json("username already taken");
-  }
+    const usernameExists = await User.findOne({ username });
+    if (usernameExists) {
+      return res.status(400).json({ message: "Username already taken" });
+    }
 
-  if (password === confirmPassword) {
-    const existingUser = await User.findOne({ email: email });
+    if (password !== confirmPassword) {
+      return res.status(400).json({ message: "Passwords do not match" });
+    }
+
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.json("user already exists");
+      return res.status(400).json({ message: "User already exists" });
     }
 
     const hash = await bcrypt.hash(password, 10);
@@ -128,13 +132,17 @@ app.post("/register", async (req, res) => {
     await newUser.save();
 
     verifiedEmails.delete(email);
+
     const token = jwt.sign({ userId: newUser._id }, "harsharsharshars");
     res.cookie("token", token);
-    res.json("Registration Successful.");
-  } else {
-    res.json("password do not match");
+
+    res.status(200).json({ message: "Registration Successful." });
+  } catch (err) {
+    console.error("Registration error:", err);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
+
 
 app.get("/login", (req, res) => {
   const message = req.query.msg || null;
@@ -209,7 +217,7 @@ app.post("/add-to-cart", authenticateToken, async (req, res) => {
   const existingItem = user.cart.find(
     (item) => item.name === cartItem.name && item.quantity === cartItem.quantity
   );
-   let currCount = 1;
+  let currCount = 1;
   if (existingItem) {
     existingItem.count = (existingItem.count || 1) + 1;
     currCount = existingItem.count;
@@ -219,39 +227,39 @@ app.post("/add-to-cart", authenticateToken, async (req, res) => {
 
   await user.save();
   res.json({
-    message:"One Item Added",
-    count:currCount
+    message: "One Item Added",
+    count: currCount
   });
 });
 
-app.get("/cart-count", authenticateToken, async (req, res)=>{
+app.get("/cart-count", authenticateToken, async (req, res) => {
   const user = await User.findById(req.userId);
-  if(!user) return res.send("User Not Found");
-  res.send({cartCount:user.cart.length});
+  if (!user) return res.send("User Not Found");
+  res.send({ cartCount: user.cart.length });
 
 })
 
-app.post("/remove-item", authenticateToken, async (req, res)=>{
+app.post("/remove-item", authenticateToken, async (req, res) => {
   const cartItem = req.body;
   const user = await User.findById(req.userId);
-  if(!user) return res.send("User Not Found");  
+  if (!user) return res.send("User Not Found");
   const existingItem = user.cart.find(
-    (item)=> item.quantity === cartItem.quantity && item.name === cartItem.name
+    (item) => item.quantity === cartItem.quantity && item.name === cartItem.name
   );
 
   let currCount = 1;
-  if(existingItem){
-    existingItem.count = (existingItem.count || 1)-1;
+  if (existingItem) {
+    existingItem.count = (existingItem.count || 1) - 1;
     currCount = existingItem.count;
-    if(existingItem.count === 0){
+    if (existingItem.count === 0) {
       user.cart.pull(existingItem);
     }
   }
-    await user.save();
-    res.json({
-      message:"One Item Removed",
-      count:currCount
-    });
+  await user.save();
+  res.json({
+    message: "One Item Removed",
+    count: currCount
+  });
 });
 
 
@@ -272,10 +280,10 @@ app.post("/delete-item", authenticateToken, async (req, res) => {
     const user = await User.findById(req.userId);
     if (!user) return res.status(404).json({ success: false });
 
-    user.cart.pull({_id:id});
+    user.cart.pull({ _id: id });
     await user.save();
 
-    res.json({ message: "One Item Deleted", success:true });
+    res.json({ message: "One Item Deleted", success: true });
   } catch (err) {
     console.error("Error removing item:", err);
     res.status(500).json({ success: false });

@@ -51,7 +51,7 @@ document.querySelector(".signbtn").addEventListener("click", async (e) => {
     const data = await res.json();
 
     const msg = document.getElementById("msg");
-    msg.innerText = data;
+    msg.innerText = data.message;
     msg.style.display = "block";
 
         setTimeout(() => {
